@@ -77,21 +77,7 @@ if (database.Icon && database.Icon.Type === 'file') {
   </head>
   <body>
     <GoogleAnalytics trackingId={PUBLIC_GA_TRACKING_ID} />
-    <div class="container">
-      <header>
-        {
-          coverImageURL && (
-            <div class="cover">
-              <img src={coverImageURL} alt="Site cover image" loading="lazy" />
-            </div>
-          )
-        }
-      </header>
-
-      <div>
-        <main>
-          <div class="content">
-            <header>
+    <header>
               <h1>
                 <a href={getNavLink('/')}>
                   {
@@ -124,6 +110,21 @@ if (database.Icon && database.Icon.Type === 'file') {
                 {database.Description}
               </div>
             </header>
+    <div class="container">
+      <header>
+        {
+          coverImageURL && (
+            <div class="cover">
+              <img src={coverImageURL} alt="Site cover image" loading="lazy" />
+            </div>
+          )
+        }
+      </header>
+
+      <div>
+        <main>
+          <div class="content">
+            
 
             <slot name="main" />
 
@@ -277,7 +278,7 @@ if (database.Icon && database.Icon.Type === 'file') {
     --gap: 1rem;
     --gap-double: 2rem;
 
-    --bg: #fff;
+    --bg: #F1F1F1;
     --fg: #333;
     --accents-1: #666;
     --accents-2: #666;

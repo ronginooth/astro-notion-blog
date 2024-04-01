@@ -1,6 +1,17 @@
 .main header {
   padding: 0 0 20px;
 }
+/* <slot name="main" />のCSS */
+.main{
+  background: var(--bg);
+  padding: 2vw;
+}
+
+/* <slot name="aside" />のCSS */
+.aside{
+  background: var(--bg);
+  padding: 2vw;
+}
 .main footer {
   border-top: 1px dashed #888;
   margin: 0 auto;
