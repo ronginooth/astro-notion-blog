@@ -24,7 +24,9 @@ export async function getOgImage(title: string) {
         alignItems: 'center',
       }}
     >
-      <div
+        
+        
+        <div
         style={{
           display: 'flex',
           width: '1140px',

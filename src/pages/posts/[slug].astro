@@ -114,9 +114,17 @@ if (post.FeaturedImage && post.FeaturedImage.Url) {
       <PostDate post={post} />
       <PostTags post={post} />
       <PostTitle post={post} enableLink={false} />
-
+<!-- 👇記事の中にもOG画像 -->
+<img
+	src={'/og/' + `${post.Slug}` + '.png'}
+	width="1200"
+	height="630"
+	alt="ogImage"
+	loading="lazy"
+	class="ogImage"
+/>
       <!-- 👇アイキャッチ表示処理 -->
-      <PostFeaturedImage post={post} />
+      <!-- PostFeaturedImage post={post} -->
       <!-- 👆 -->
 
       <PostBody blocks={blocks} />
@@ -141,15 +149,7 @@ if (post.FeaturedImage && post.FeaturedImage.Url) {
   </div>
 </Layout>
 
-<!-- 👇記事の中にもOG画像 -->
-<img
-	src={'/og/' + `${post.Slug}` + '.png'}
-	width="1200"
-	height="630"
-	alt="ogImage"
-	loading="lazy"
-	class="ogImage"
-/>
+
 
 <style>
 .ogImage {

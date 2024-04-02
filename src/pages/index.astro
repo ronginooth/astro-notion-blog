@@ -38,7 +38,16 @@ const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
             <PostDate post={post} />
             <PostTags post={post} />
             <PostTitle post={post} />
-            <PostFeaturedImage post={post} />
+            <!-- 👇記事リストにサムネイル -->
+            <img
+        src={'/og/' + `${post.Slug}` + '.png'}
+        width="1200"
+        height="630"
+        alt="ogImage"
+        loading="lazy"
+        class="ogImage"
+      />
+      <!-- 👆記事リストにサムネイル -->
             <PostExcerpt post={post} />
             <ReadMoreLink post={post} />
           </div>
@@ -57,28 +66,7 @@ const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
   </div>
 </Layout>
 
-<!-- 👇記事リストにサムネイル -->
-posts.length === 0 ? (
-  <NoContents contents={posts} />
-) : (
-  posts.map((post) => (
-    <div class={styles.post} key={post.Slug}>
-      <PostDate post={post} />
-      <PostTags post={post} />
-      <PostTitle post={post} />
-      <img
-        src={'/og/' + `${post.Slug}` + '.png'}
-        width="1200"
-        height="630"
-        alt="ogImage"
-        loading="lazy"
-        class="ogImage"
-      />
-      <PostExcerpt post={post} />
-      <ReadMoreLink post={post} />
-    </div>
-  ))
-)
+
 <style>
 .ogImage {
   max-width: 100%;
