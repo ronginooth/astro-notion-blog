@@ -2,12 +2,12 @@ import satori from 'satori';
 import sharp from 'sharp';
 
 // サイト名
-const site = 'XXX';
-const url = 'XXX';
+const site = '赤い家';
+const url = 'astro-notion-blog-876.pages.dev/';
 
 // ユーザー
-const user = 'XXX';
-const x = '@XXX';
+const user = 'ロンギ';
+const x = '@ronginooth';
 
 export async function getOgImage(title: string) {
   const fontData = (await getFontData()) as ArrayBuffer;
@@ -58,7 +58,7 @@ export async function getOgImage(title: string) {
             fontSize: '2rem',
           }}
         >
-          {user + x}
+          {site + x}
         </div>
         <div
           style={{
