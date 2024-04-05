@@ -2,7 +2,7 @@ import satori from 'satori';
 import sharp from 'sharp';
 
 // サイト名
-const site = '赤い家';
+const site = 'ロンギの家';
 const url = 'astro-notion-blog-876.pages.dev/';
 
 // ユーザー
@@ -16,9 +16,11 @@ export async function getOgImage(title: string) {
       style={{
         width: '1200px',
         height: '630px',
-        backgroundColor: '#52ACFF',
-        backgroundImage: 'linear-gradient(225deg, #52ACFF 34%, #FFE32C 100%)',
+ //       backgroundColor: '#52ACFF',
+        backgroundImage: 'url(https://blog-imgs-173.fc2.com/y/e/l/yellowmoneymonkey/bg-image.jpg)',
+ //       backgroundImage: 'linear-gradient(225deg, #52ACFF 34%, #FFE32C 100%)',
         display: 'flex',
+        borderRadius: '8px',
         flexWrap: 'nowrap',
         justifyContent: 'center',
         alignItems: 'center',
@@ -31,7 +33,9 @@ export async function getOgImage(title: string) {
           display: 'flex',
           width: '1140px',
           height: '567px',
-          background: 'rgba(255,255,255,0.7)',
+          backgroundImage:
+            "linear-gradient(0deg, rgba(200,200,200,0.8) 0%, rgba(250,250,250,0.9) 100%)",
+        //  background: 'rgba(255,255,255,0.7)',
           borderRadius: '8px',
           flexWrap: 'wrap',
           justifyContent: 'center',
