@@ -26,9 +26,15 @@ export async function getOgImage(title: string) {
         alignItems: 'center',
       }}
     >
-        
-        
         <div
+        tw="flex flex-col w-full px-15 py-12 justify-between border"
+        style={{
+          backgroundImage:
+            "linear-gradient(0deg, rgba(80,80,80,0.8) 0%, rgba(120,120,120,0.9) 100%)",
+        }}
+      >
+        
+        {/* <div
         style={{
           display: 'flex',
           width: '1140px',
@@ -40,8 +46,20 @@ export async function getOgImage(title: string) {
           flexWrap: 'wrap',
           justifyContent: 'center',
         }}
-      >
-        <div
+      > */}
+        <h1 tw="text-5xl text-gray-100">{title}</h1>
+        <div tw="flex justify-between items-center">
+          <p tw="items-center">
+            <img
+              tw="h-12 w-12 rounded-full border border-gray-300"
+              src="https://avatars.githubusercontent.com/u/4057085?v=4"
+              alt="icon"
+            />
+            <span tw="ml-3 text-gray-100 text-lg">ronginooth</span>
+          </p>
+          <p tw="text-gray-100 pr-7">https://ronginooth.com</p>
+        </div>
+        {/* <div
           style={{
             width: '960px',
             height: '80%',
@@ -63,7 +81,7 @@ export async function getOgImage(title: string) {
           }}
         >
           {site + x}
-        </div>
+        </div> */}
         <div
           style={{
             flexBasis: '54%',
