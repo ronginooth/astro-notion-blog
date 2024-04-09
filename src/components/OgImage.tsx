@@ -18,13 +18,16 @@ export async function getOgImage(title: string) {
         height: '630px',
  //       backgroundColor: '#52ACFF',
  backgroundImage: 'url(https://astro-notion-blog-876.pages.dev/default-og-image.png)',
+ backgroundSize: 'cover', // この行を修正
+        backgroundPosition: 'center', // この行を追加
+        backgroundRepeat: 'no-repeat', // この行を追加
        // backgroundImage: 'url(https://blog-imgs-173.fc2.com/y/e/l/yellowmoneymonkey/bg-image.jpg)',
  //       backgroundImage: 'linear-gradient(225deg, #52ACFF 34%, #FFE32C 100%)',
         display: 'flex',
         borderRadius: '8px',
         flexWrap: 'nowrap',
         justifyContent: 'center',
-        alignItems: 'center',
+        //alignItems: 'center',
       }}
     >
         <div
@@ -48,17 +51,17 @@ export async function getOgImage(title: string) {
           justifyContent: 'center',
         }}
       > */}
-        <h1 tw="text-5xl text-gray-100">{title}</h1>
+        <h1 tw="text-6xl text-gray-100">{title}</h1>
         <div tw="flex justify-between items-center">
           <p tw="items-center">
             <img
-              tw="h-12 w-12 rounded-full border border-gray-300"
+              tw="h-20 w-20 rounded-full border border-gray-300"
               src="https://avatars.githubusercontent.com/u/4057085?v=4"
               alt="icon"
             />
-            <span tw="ml-3 text-gray-100 text-lg">ronginooth</span>
+            <span tw="ml-5 text-gray-100 text-2xl">ronginooth</span>
           </p>
-          <p tw="text-gray-100 pr-7">https://ronginooth.com</p>
+          <p tw="text-gray-100 pr-7 text-2xl">https://ronginooth.com</p>
         </div>
         {/* <div
           style={{
