@@ -17,7 +17,7 @@ export async function getOgImage(title: string) {
         width: '1200px',
         height: '630px',
  //       backgroundColor: '#52ACFF',
- backgroundImage: 'url(/default-og-image.png)',
+ backgroundImage: 'url(https://astro-notion-blog-876.pages.dev/default-og-image.png)',
        // backgroundImage: 'url(https://blog-imgs-173.fc2.com/y/e/l/yellowmoneymonkey/bg-image.jpg)',
  //       backgroundImage: 'linear-gradient(225deg, #52ACFF 34%, #FFE32C 100%)',
         display: 'flex',
