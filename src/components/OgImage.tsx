@@ -17,7 +17,7 @@ export async function getOgImage(title: string) {
         width: '1200px',
         height: '630px',
  //       backgroundColor: '#52ACFF',
- backgroundImage: 'url(https://astro-notion-blog-876.pages.dev/default-og-image.png)',
+ backgroundImage: 'url(https://astro-notion-blog-876.pages.dev/sea-sky.jpg)',
  backgroundSize: 'cover', // この行を修正
         backgroundPosition: 'center', // この行を追加
         backgroundRepeat: 'no-repeat', // この行を追加
@@ -34,7 +34,7 @@ export async function getOgImage(title: string) {
         tw="flex flex-col w-full px-15 py-12 justify-between border"
         style={{
           backgroundImage:
-            "linear-gradient(0deg, rgba(80,80,80,0.8) 0%, rgba(120,120,120,0.9) 100%)",
+            "linear-gradient(0deg, rgba(80,80,80,0.1) 0%, rgba(120,120,120,0.2) 100%)",
         }}
       >
         
