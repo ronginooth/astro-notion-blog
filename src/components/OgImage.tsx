@@ -14,11 +14,11 @@ export async function getOgImage(title: string) {
   const svg = await satori(
     <div
       style={{
-        width: '1200px',
-        height: '630px',
+        width: '100%',
+        height: '100%',
  //       backgroundColor: '#52ACFF',
  backgroundImage: 'url(https://astro-notion-blog-876.pages.dev/sea-sky.jpg)',
- backgroundSize: 'cover', // この行を修正
+ backgroundSize: '1200px 630px', // この行を修正
         backgroundPosition: 'center', // この行を追加
         backgroundRepeat: 'no-repeat', // この行を追加
        // backgroundImage: 'url(https://blog-imgs-173.fc2.com/y/e/l/yellowmoneymonkey/bg-image.jpg)',
@@ -86,13 +86,13 @@ export async function getOgImage(title: string) {
         >
           {site + x}
         </div> */}
-        <div
+        {/* <div
           style={{
             flexBasis: '54%',
             marginRight: '5.5rem',
             display: 'flex',
           }}
-        ></div>
+        ></div> */}
       </div>
     </div>,
     {
