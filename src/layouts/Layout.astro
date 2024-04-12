@@ -250,6 +250,25 @@ if (database.Icon && database.Icon.Type === 'file') {
   main header h1 a:hover {
     color: inherit;
   }
+//アニメここから
+img {
+          animation: iconanime 2.0s linear 1s infinite;
+        }
+        @keyframes iconanime{
+          0%   { transform: scale(1.0, 1.0) translate(0%, 0%); }
+          5%  { transform: scale(1.1, 0.9) translate(0%, 5%); }
+          20%  { transform: scale(1.15, 0.8) translate(0%, 15%); }
+          25%  { transform: scale(1.0, 1.0) translate(0%, 0%); }
+          30%  { transform: scale(0.9, 1.15) translate(0%, -30%); }
+          37%  { transform: scale(0.9, 1.15) translate(0%, -20%); }
+          43%  { transform: scale(1.15, 0.8) translate(0%, 15%); }
+          50% { transform: scale(1.0, 1.0) translate(0%, 0%); }
+          100% { transform: scale(1.0, 1.0) translate(0%, 0%); }
+        }
+
+//アニメここまで
+
+
   main header h1 a span,
   main header h1 a img {
     display: inline-block;
