@@ -15,18 +15,37 @@ const { post } = Astro.props
 
 <style>
   .read-more-link {
-    color: var(--fg);
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-light);
   }
   .read-more-link a {
-    color: rgb(55, 53, 47);
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 2rem;
-    text-decoration: underline;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accents-1);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid var(--accents-1);
+    border-radius: var(--radius);
+    background: transparent;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
-  @media (max-width: 640px) {
-    .read-more-link a {
-      width: 50%;
-    }
+  .read-more-link a:hover {
+    background: var(--accents-1);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--shadow);
+  }
+  .read-more-link a::after {
+    content: '→';
+    transition: transform 0.2s ease;
+  }
+  .read-more-link a:hover::after {
+    transform: translateX(2px);
   }
 </style>
