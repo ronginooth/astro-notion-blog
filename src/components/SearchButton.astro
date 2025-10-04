@@ -7,27 +7,37 @@ import { Icon } from 'astro-icon/components';
 <style>
   .search-button {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     width: 100%;
-    background-color: transparent;
-    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--accents-1), var(--accents-2));
+    margin-bottom: 25px;
     border: none;
     border-radius: var(--radius);
-    padding: 0.4rem 0.4rem;
-    color: #777;
-    font-size: 0.95rem;
-    font-weight: bold;
+    padding: 12px 16px;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px var(--shadow);
   }
   .search-button:hover {
-    cursor: pointer;
-    background-color: #ddd;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--shadow-hover);
+  }
+  .search-button:active {
+    transform: translateY(0);
   }
   .search-button svg {
-    width: 20px;
-    height: 20px;
-    margin-right: 0.2rem;
+    width: 16px;
+    height: 16px;
   }
   [astro-icon="octicon:search-24"] {
-    color: var(--fg);
+    color: white;
   }
 </style>
 
