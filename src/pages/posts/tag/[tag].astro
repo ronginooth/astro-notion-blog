@@ -1,6 +1,6 @@
 ---
 import type { SelectProperty } from '../../../lib/interfaces.ts'
-import { NUMBER_OF_POSTS_PER_PAGE } from '../../../server-constants.ts'
+import { NUMBER_OF_POSTS_PER_PAGE, NOTION_API_SECRET, DATABASE_ID } from '../../../server-constants.ts'
 import {
   getPostsByTag,
   getRankedPosts,
@@ -22,6 +22,13 @@ import styles from '../../../styles/blog.module.css'
 import '../../../styles/notion-color.css'
 
 export async function getStaticPaths() {
+  // Return empty paths if credentials are not provided or are mock values
+  if (!NOTION_API_SECRET || !DATABASE_ID || 
+      NOTION_API_SECRET === 'mock_secret_for_build' || 
+      DATABASE_ID === 'mock_database_id') {
+    return []
+  }
+
   const allTags = await getAllTags()
   return allTags.map((tag: SelectProperty) => ({ params: { tag: tag.name } }))
 }
