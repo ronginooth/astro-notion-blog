@@ -31,7 +31,12 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accents-1), var(--accents-2), var(--accents-3));
+  background: linear-gradient(
+    90deg,
+    var(--accents-1),
+    var(--accents-2),
+    var(--accents-3)
+  );
   opacity: 0;
   transition: opacity 0.3s ease;
 }
