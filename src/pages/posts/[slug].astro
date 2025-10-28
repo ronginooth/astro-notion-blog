@@ -25,8 +25,16 @@ import PostRelativeLink from '../../components/PostRelativeLink.astro'
 import BlogPostsLink from '../../components/BlogPostsLink.astro'
 import BlogTagsLink from '../../components/BlogTagsLink.astro'
 import styles from '../../styles/blog.module.css'
+import { NOTION_API_SECRET, DATABASE_ID } from '../../server-constants.ts'
 
 export async function getStaticPaths() {
+  // Return empty paths if credentials are not provided or are mock values
+  if (!NOTION_API_SECRET || !DATABASE_ID || 
+      NOTION_API_SECRET === 'mock_secret_for_build' || 
+      DATABASE_ID === 'mock_database_id') {
+    return []
+  }
+
   const posts = await getAllPosts()
   return posts.map((post: interfaces.Post) => ({ params: { slug: post.Slug } }))
 }

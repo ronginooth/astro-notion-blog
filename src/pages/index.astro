@@ -1,5 +1,5 @@
 ---
-import { NUMBER_OF_POSTS_PER_PAGE } from '../server-constants.ts'
+import { NUMBER_OF_POSTS_PER_PAGE, NOTION_API_SECRET, DATABASE_ID } from '../server-constants.ts'
 import {
   getPosts,
   getRankedPosts,
@@ -19,12 +19,23 @@ import BlogPostsLink from '../components/BlogPostsLink.astro'
 import BlogTagsLink from '../components/BlogTagsLink.astro'
 import styles from '../styles/blog.module.css'
 
-const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
-  getPosts(NUMBER_OF_POSTS_PER_PAGE),
-  getRankedPosts(),
-  getAllTags(),
-  getNumberOfPages(),
-])
+// Check if credentials are provided, otherwise use empty data
+let posts, rankedPosts, tags, numberOfPages
+if (!NOTION_API_SECRET || !DATABASE_ID || 
+    NOTION_API_SECRET === 'mock_secret_for_build' || 
+    DATABASE_ID === 'mock_database_id') {
+  posts = []
+  rankedPosts = []
+  tags = []
+  numberOfPages = 0
+} else {
+  [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
+    getPosts(NUMBER_OF_POSTS_PER_PAGE),
+    getRankedPosts(),
+    getAllTags(),
+    getNumberOfPages(),
+  ])
+}
 ---
 
 <Layout>
