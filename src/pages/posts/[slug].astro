@@ -24,6 +24,7 @@ import PostBody from '../../components/PostBody.astro'
 import PostRelativeLink from '../../components/PostRelativeLink.astro'
 import BlogPostsLink from '../../components/BlogPostsLink.astro'
 import BlogTagsLink from '../../components/BlogTagsLink.astro'
+import TableOfContents from '../../components/notion-blocks/TableOfContents.astro'
 import styles from '../../styles/blog.module.css'
 
 export async function getStaticPaths() {
@@ -87,6 +88,10 @@ const currentPostIndex = allPosts.findIndex((post) => post.Slug === slug)
 const prevPost = allPosts[currentPostIndex + 1]
 const nextPost = allPosts[currentPostIndex - 1]
 
+const headings = blocks.filter((b: interfaces.Block) =>
+  ['heading_1', 'heading_2', 'heading_3'].includes(b.Type)
+)
+
 let ogImage = ''
 if (post.FeaturedImage && post.FeaturedImage.Url) {
   ogImage = new URL(filePath(new URL(post.FeaturedImage.Url)), Astro.site)
@@ -113,7 +118,17 @@ if (post.FeaturedImage && post.FeaturedImage.Url) {
     </div>
   </div>
 
-  <div slot="aside" class="aside">
+  <div slot="aside" class="aside" style="flex: 1;">
+    <div class="sticky-toc">
+      {
+        headings.length > 0 && (
+          <TableOfContents
+            block={{ Type: 'table_of_contents', TableOfContents: { Color: 'gray' } }}
+            headings={headings}
+          />
+        )
+      }
+    </div>
     <BlogPostsLink
       heading="Posts in the same category"
       posts={postsHavingSameTag.filter(
@@ -125,3 +140,13 @@ if (post.FeaturedImage && post.FeaturedImage.Url) {
     <BlogTagsLink heading="Categories" tags={tags} />
   </div>
 </Layout>
+
+<style>
+  .sticky-toc {
+    position: sticky;
+    top: 20px;
+    z-index: 10;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+  }
+</style>

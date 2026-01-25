@@ -12,52 +12,273 @@ export interface Props {
 const { block, headings } = Astro.props
 ---
 
-<div class="table-of-contents">
-  {
-    headings.map((headingBlock: interfaces.Block) => {
-      const heading =
-        headingBlock.Heading1 || headingBlock.Heading2 || headingBlock.Heading3
+<div class="table-of-contents-card">
+  <div class="toc-title">目次</div>
+  <div class="toc-list">
+    {
+      headings.map((headingBlock: interfaces.Block) => {
+        const heading =
+          headingBlock.Heading1 || headingBlock.Heading2 || headingBlock.Heading3
 
-      let indentClass = ''
-      if (headingBlock.Type === 'heading_2') {
-        indentClass = 'indent-1'
-      } else if (headingBlock.Type === 'heading_3') {
-        indentClass = 'indent-2'
-      }
+        let indentClass = ''
+        if (headingBlock.Type === 'heading_2') {
+          indentClass = 'indent-1'
+        } else if (headingBlock.Type === 'heading_3') {
+          indentClass = 'indent-2'
+        }
 
-      return (
-        <a
-          href={`#${buildHeadingId(heading)}`}
-          class={`table-of-contents ${snakeToKebab(
-            block.TableOfContents.Color
-          )} ${indentClass}`}
-        >
-          {heading.RichTexts.map(
-            (richText: interfaces.RichText) => richText.PlainText
-          ).join('')}
-        </a>
-      )
-    })
-  }
+        return (
+          <a
+            href={`#${buildHeadingId(heading)}`}
+            class={`toc-link ${snakeToKebab(
+              block.TableOfContents.Color
+            )} ${indentClass}`}
+          >
+            <span class="toc-marker"></span>
+            {heading.RichTexts.map(
+              (richText: interfaces.RichText) => richText.PlainText
+            ).join('')}
+          </a>
+        )
+      })
+    }
+  </div>
 </div>
 
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tocLinks = document.querySelectorAll('.toc-link')
+    const headings = document.querySelectorAll('.postDetail h3, .postDetail h4, .postDetail h5')
+    
+    // If no headings or links, or count mismatch, we try best effort or return
+    if (tocLinks.length === 0 || headings.length === 0) return
+
+    // Limit to the minimum length to avoid index out of bounds
+    const length = Math.min(tocLinks.length, headings.length)
+
+    let ticking = false
+    
+    const updateActive = () => {
+      const scrollY = window.scrollY
+      const viewportHeight = window.innerHeight
+      const offset = 100 // Threshold from top (px)
+
+      let activeIndex = -1
+
+      // Strategy: Find the last heading that is above the "read line" (offset)
+      // Or if none are above, maybe we are at the top.
+      
+      for (let i = 0; i < length; i++) {
+        const heading = headings[i]
+        const rect = heading.getBoundingClientRect()
+        
+        // rect.top is relative to viewport top
+        // If rect.top <= offset, the heading is above the line or just crossing it.
+        if (rect.top <= offset) {
+          activeIndex = i
+        } else {
+          // As we go down headings, if we find one below the line, we stop.
+          // Because subsequent headings are definitely below.
+          break
+        }
+      }
+
+      // Apply active class
+      tocLinks.forEach((link, index) => {
+        if (index === activeIndex) {
+          link.classList.add('active')
+        } else {
+          link.classList.remove('active')
+        }
+      })
+    }
+
+    document.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActive()
+          ticking = false
+        })
+        ticking = true
+      }
+    })
+    
+    // Initial call
+    updateActive()
+  })
+</script>
+
 <style>
-  .table-of-contents {
+  .table-of-contents-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 24px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   }
-  .table-of-contents > a {
-    display: block;
-    line-height: 1.8rem;
+
+  .toc-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--fg);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toc-title::before {
+    content: '📑';
+    font-size: 1.2rem;
+  }
+
+  .toc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .toc-link {
+    display: flex;
+    align-items: flex-start;
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    opacity: 0.8;
+    border: none; /* Reset border */
+  }
+
+  /* Hover: Card style (previous preference) */
+  .toc-link:hover {
+    background: rgba(255, 255, 255, 0.8);
+    opacity: 1;
+    color: var(--accents-1);
+    transform: translateX(4px);
+  }
+
+  /* Active: Simple Orange Text */
+  .toc-link.active {
+    color: #e67e22; /* Orange */
+    font-weight: 700;
+    opacity: 1;
+    background: transparent;
+    transform: none;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 24px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  }
+
+  .toc-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--fg);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toc-title::before {
+    content: '📑'; /* Simple icon */
+    font-size: 1.2rem;
+  }
+
+  .toc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .toc-link {
+    display: flex;
+    align-items: flex-start; /* Align text top if wrapping */
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+    border-left: 3px solid transparent; /* Marker for active state */
+  }
+
+  .toc-link:hover {
+    background: rgba(255, 255, 255, 0.8);
+    opacity: 1;
+    color: var(--accents-1);
+    transform: translateX(4px);
+  }
+
+  /* Active State */
+  .toc-link.active {
+    background: rgba(255, 255, 255, 0.95);
+    opacity: 1;
+    color: #333;
+    font-weight: 700;
+    transform: translateX(6px);
+    box-shadow: 0 4px 12px rgba(255, 171, 145, 0.15); /* Warm glow */
+    border-left: 3px solid #ff8a65; /* Orange accent border */
+  }
+
+  .toc-marker {
+    display: inline-block;
+    min-width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--accents-2);
+    margin-top: 9px; /* Align with text line-height */
+    margin-right: 10px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .toc-link.active .toc-marker {
+    background-color: #ff8a65; /* Active warm orange */
+    transform: scale(1.3);
+    box-shadow: 0 0 6px rgba(255, 138, 101, 0.6);
+  }
+
+  .indent-1 .toc-marker {
+    background-color: transparent;
+    border: 1px solid var(--accents-2);
+  }
+  .toc-link.active.indent-1 .toc-marker {
+    background-color: transparent;
+    border-color: #ff8a65;
+  }
+
+  .indent-2 .toc-marker {
+     width: 4px;
+     height: 4px;
+     border: 1px solid var(--accents-2);
+     background-color: var(--accents-2);
+  }
+  .toc-link.active.indent-2 .toc-marker {
+    background-color: #ff8a65;
+    border-color: #ff8a65;
+  }
+
+  .indent-1 {
+    margin-left: 1.5rem;
     font-size: 0.9rem;
-    font-weight: 500;
-    text-decoration: underline;
   }
-  .table-of-contents > a:hover {
-    background: rgba(241, 241, 239, 1) !important;
-  }
-  .table-of-contents > a.indent-1 {
-    padding-left: 1.5rem;
-  }
-  .table-of-contents > a.indent-2 {
-    padding-left: 3rem;
+
+  .indent-2 {
+    margin-left: 3rem;
+    font-size: 0.85rem;
   }
 </style>

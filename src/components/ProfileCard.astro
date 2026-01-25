@@ -1,0 +1,32 @@
+---
+import styles from '../styles/blog.module.css'
+---
+
+<div class={`${styles.post} ${styles.profileCard}`} style="background: rgba(255,255,255,0.7);">
+  <img src="/profile.jpg" alt="Profile" class={styles.avatar} />
+  <div class={styles.profileName}>ロンギ</div>
+  <div class={styles.profileDesc}>
+    理系研究職 x AI。<br />
+    Notion x Obsidian x AIエージェント開発で思考を整える、AI界隈のプリン。<br />
+    論文執筆はAIに任せてコーヒーで一息。
+  </div>
+  <div class={styles.socialIcons}>
+    <a href="https://x.com/ronginooth" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+      <i class="ri-twitter-x-line"></i>
+    </a>
+    <a href="#" aria-label="Note">
+      <img src="/note-logo.png" alt="Note" />
+    </a>
+  </div>
+</div>
+
+<style>
+  /* Local overrides if needed, though relying on blog.module.css is better */
+  /* Ensure it looks like a card but maintains profile styling */
+  .profileCard {
+    /* Override margin to fit within grid items */
+    margin-top: 80px !important; /* Keep the pop-out space */
+    display: inline-block; /* For masonry */
+    width: 100%;
+  }
+</style>

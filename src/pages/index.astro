@@ -18,6 +18,7 @@ import ReadMoreLink from '../components/ReadMoreLink.astro'
 import Pagination from '../components/Pagination.astro'
 import BlogPostsLink from '../components/BlogPostsLink.astro'
 import BlogTagsLink from '../components/BlogTagsLink.astro'
+import ProfileCard from '../components/ProfileCard.astro'
 import styles from '../styles/blog.module.css'
 
 const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
@@ -56,24 +57,6 @@ const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
   </div>
 
   <div slot="aside" class={styles.aside}>
-    <div class={styles.profileCard}>
-      <img src="/profile.jpg" alt="Profile" class={styles.avatar} />
-      <div class={styles.profileName}>ロンギ</div>
-      <div class={styles.profileDesc}>
-        理系研究職 x AI。<br />
-        Notion x Obsidian x AIエージェント開発で思考を整える、AI界隈のプリン。<br />
-        論文執筆はAIに任せてコーヒーで一息。
-      </div>
-      <div class={styles.socialIcons}>
-        <a href="https://x.com/ronginooth" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-          <i class="ri-twitter-x-line"></i>
-        </a>
-        <a href="#" aria-label="Note">
-          <img src="/note-logo.png" alt="Note" />
-        </a>
-      </div>
-    </div>
-
     <BlogPostsLink heading="Recommended" posts={rankedPosts} />
     <BlogTagsLink heading="Categories" tags={tags} />
   </div>
