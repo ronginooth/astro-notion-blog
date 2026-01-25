@@ -7,22 +7,16 @@
 /* We will use a modifier class for the grid layout on the index page */
 .mainGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  padding-bottom: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  padding-bottom: 60px;
 }
 
-/* Header/Footer spanning full width in grid if needed, 
-   but currently structure is main > [post, post...] + footer.
-   We need to handle the footer carefully or leave it at bottom.
-   Ideally footer should be outside grid or span all columns.
-   For now, we will set .main footer to span all.
-*/
+/* Header/Footer spanning full width in grid if needed */
 .main>footer {
   grid-column: 1 / -1;
   border-top: none;
-  /* Remove dashed line for cleaner look */
-  margin-top: 20px;
+  margin-top: 40px;
   text-align: center;
 }
 
@@ -31,117 +25,195 @@
   display: flex;
   flex-direction: column;
   padding: 0;
-  /* Remove padding here, put it in inner content so image can touch edges if we had one */
+  border-radius: 24px;
+  /* Default fallback background */
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   overflow: hidden;
-  /* For image clipping */
   height: 100%;
-  /* Equal height in grid */
   position: relative;
 }
 
-.post:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.85);
-  z-index: 10;
+/* Pastel Color Rotation for Cards */
+.post:nth-child(5n + 1) {
+  background: rgba(255, 209, 220, 0.45);
 }
 
-/* Internal content padding */
+/* Pink */
+.post:nth-child(5n + 2) {
+  background: rgba(162, 210, 255, 0.4);
+}
+
+/* Blue */
+.post:nth-child(5n + 3) {
+  background: rgba(251, 248, 204, 0.5);
+}
+
+/* Yellow */
+.post:nth-child(5n + 4) {
+  background: rgba(208, 244, 222, 0.45);
+}
+
+/* Green */
+.post:nth-child(5n + 5) {
+  background: rgba(221, 212, 232, 0.5);
+}
+
+/* Purple */
+
+.post:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Boost color on hover */
+.post:nth-child(5n + 1):hover {
+  background: rgba(255, 209, 220, 0.7);
+}
+
+.post:nth-child(5n + 2):hover {
+  background: rgba(162, 210, 255, 0.65);
+}
+
+.post:nth-child(5n + 3):hover {
+  background: rgba(251, 248, 204, 0.8);
+}
+
+.post:nth-child(5n + 4):hover {
+  background: rgba(208, 244, 222, 0.7);
+}
+
+.post:nth-child(5n + 5):hover {
+  background: rgba(221, 212, 232, 0.75);
+}
+
+
 /* Internal content padding */
 .postContent {
-  padding: 20px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   flex: 1;
-  /* Ensure consistent height alignment */
-  gap: 8px;
-  /* Add some spacing between elements */
+  gap: 12px;
 }
 
 .postContent> :last-child {
   margin-top: auto;
 }
 
-/* Profile Card Styling (to be used in index.astro) */
+/* Profile Card Styling - "About Me" style */
 .profileCard {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 30px 20px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 40px 24px;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  margin-bottom: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  margin-bottom: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease;
+}
+
+.profileCard:hover {
+  transform: translateY(-4px);
 }
 
 .avatar {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  margin: 0 auto 16px;
-  /* border: 4px solid rgba(255,255,255,0.8); */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 0 auto 20px;
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   object-fit: cover;
+  background-color: #fff;
 }
 
 .profileName {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   color: var(--fg);
+  letter-spacing: 0.05em;
 }
 
 .profileDesc {
-  font-size: 0.9rem;
-  color: var(--accents-1);
-  line-height: 1.5;
-  margin-bottom: 20px;
+  font-size: 0.95rem;
+  color: #666;
+  /* slightly darker for readability */
+  line-height: 1.6;
+  margin-bottom: 24px;
 }
 
 .socialIcons {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 20px;
 }
 
 .socialIcons a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  /* Fixed size for icons */
-  height: 32px;
-  color: var(--fg);
-  font-size: 1.2rem;
-  transition: color 0.2s;
+  width: 40px;
+  height: 40px;
+  color: #555;
+  font-size: 1.4rem;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
 }
 
 .socialIcons a:hover {
-  color: #eb5757;
-  /* Accent color on hover */
+  color: #333;
+  /* Keep icon dark */
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-3px) scale(1.05);
+  /* Gentle lift */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  /* Soft shadow */
+}
+
+.socialIcons img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  transition: all 0.2s;
+  opacity: 0.65;
+}
+
+.socialIcons a:hover img {
+  filter: none;
+  /* Do not invert color */
+  opacity: 1;
 }
 
 /* Section Title */
 .sectionTitle {
   grid-column: 1 / -1;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  margin-bottom: 10px;
-  color: var(--fg);
-  padding-left: 5px;
+  margin-bottom: 16px;
+  color: #4a4a4a;
+  text-align: center;
+  letter-spacing: 0.1em;
 }
 
 @media (max-width: 640px) {
   .main {
     display: block;
+  }
+
+  .mainGrid {
+    display: block;
+    /* Stack on mobile */
   }
 
   .post {
@@ -161,18 +233,19 @@
 
 /* Single Post Page Styling */
 .postDetail {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 48px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  margin-bottom: 60px;
 }
 
 @media (max-width: 640px) {
   .postDetail {
-    padding: 20px;
+    padding: 24px;
+    border-radius: 16px;
   }
 }
