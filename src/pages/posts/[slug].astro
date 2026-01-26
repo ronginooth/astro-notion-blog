@@ -25,6 +25,7 @@ import PostRelativeLink from '../../components/PostRelativeLink.astro'
 import BlogPostsLink from '../../components/BlogPostsLink.astro'
 import BlogTagsLink from '../../components/BlogTagsLink.astro'
 import TableOfContents from '../../components/notion-blocks/TableOfContents.astro'
+import Comment from '../../components/Comment.astro'
 import styles from '../../styles/blog.module.css'
 
 export async function getStaticPaths() {
@@ -115,6 +116,7 @@ if (post.FeaturedImage && post.FeaturedImage.Url) {
       <footer>
         <PostRelativeLink prevPost={prevPost} nextPost={nextPost} />
       </footer>
+      <Comment />
     </div>
   </div>
 
