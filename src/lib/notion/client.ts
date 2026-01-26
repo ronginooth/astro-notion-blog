@@ -1045,3 +1045,32 @@ function _buildRichText(richTextObject: responses.RichTextObject): RichText {
 
   return richText
 }
+
+export async function processPostImages(posts: Post[]) {
+  const postsWithoutFeaturedImage = posts.filter((post) => !post.FeaturedImage)
+  await Promise.all(
+    postsWithoutFeaturedImage.map(async (post) => {
+      const blocks = await getAllBlocksByBlockId(post.PageId)
+      const imageBlock = blocks.find((block) => block.Type === 'image')
+      if (imageBlock && imageBlock.Image) {
+        const url = imageBlock.Image.File?.Url || imageBlock.Image.External?.Url
+        if (url) {
+          const u = new URL(url)
+          if (imageBlock.Image.File) {
+            await downloadFile(u)
+            post.FeaturedImage = {
+              Type: 'file',
+              Url: u.toString(),
+              ExpiryTime: imageBlock.Image.File.ExpiryTime,
+            }
+          } else {
+            post.FeaturedImage = {
+              Type: 'external',
+              Url: u.toString(),
+            }
+          }
+        }
+      }
+    })
+  )
+}

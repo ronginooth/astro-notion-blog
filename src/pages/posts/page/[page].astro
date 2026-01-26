@@ -4,6 +4,7 @@ import {
   getRankedPosts,
   getAllTags,
   getNumberOfPages,
+  processPostImages,
 } from '../../../lib/notion/client.ts'
 import { getPostLink } from '../../../lib/blog-helpers.ts'
 import Layout from '../../../layouts/Layout.astro'
@@ -37,6 +38,8 @@ const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
   getAllTags(),
   getNumberOfPages(),
 ])
+
+await processPostImages(posts)
 ---
 
 <Layout title={`Posts ${page}/${numberOfPages}`} path={`/posts/page/${page}`}>

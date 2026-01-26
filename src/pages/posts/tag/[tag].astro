@@ -6,6 +6,7 @@ import {
   getRankedPosts,
   getAllTags,
   getNumberOfPagesByTag,
+  processPostImages,
 } from '../../../lib/notion/client.ts'
 import { getPostLink } from '../../../lib/blog-helpers.ts'
 import Layout from '../../../layouts/Layout.astro'
@@ -35,6 +36,8 @@ const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
   getAllTags(),
   getNumberOfPagesByTag(tag),
 ])
+
+await processPostImages(posts)
 
 const currentTag = posts[0].Tags.find((t) => t.name === tag)
 ---
