@@ -96,6 +96,18 @@ const headings = blocks.filter((b: interfaces.Block) =>
 let ogImage = ''
 if (post.FeaturedImage && post.FeaturedImage.Url) {
   ogImage = new URL(filePath(new URL(post.FeaturedImage.Url)), Astro.site)
+} else {
+  const imageBlock = blocks.find((block: interfaces.Block) => block.Type === 'image')
+  if (imageBlock && imageBlock.Image) {
+      const url = imageBlock.Image.File?.Url || imageBlock.Image.External?.Url
+      if (url) {
+        if (imageBlock.Image.File) {
+           ogImage = new URL(filePath(new URL(url)), Astro.site)
+        } else {
+           ogImage = url
+        }
+      }
+  }
 }
 ---
 
