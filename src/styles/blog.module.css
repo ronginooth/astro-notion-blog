@@ -6,21 +6,14 @@
 
 /* We will use a modifier class for the grid layout on the index page */
 .mainGrid {
-  column-count: 3;
-  column-gap: 20px;
-  /* Reduced gap */
+  column-count: 2;
+  column-gap: 32px;
+  /* Increased gap for better separation */
   padding-bottom: 60px;
 }
 
-/* Switch to 2 columns earlier (when card width would be too squeezed) */
-@media (max-width: 1380px) {
-  .mainGrid {
-    column-count: 2;
-  }
-}
-
 /* Switch to 1 column earlier for better readability */
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .mainGrid {
     column-count: 1;
   }
