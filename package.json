@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "node --env-file=.env ./node_modules/.bin/astro build",
     "build:cached": "npm run cache:fetch && astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.1.2",
+    "@astrojs/sitemap": "^3.2.1",
     "@astrojs/rss": "^4.0.11",
     "@iconify-json/octicon": "^1.2.2",
     "@notionhq/client": "^2.2.15",

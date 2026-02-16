@@ -13,9 +13,11 @@ export interface Props {
   description: string
   path: string
   ogImage: string
+  publishDate?: string
+  updatedDate?: string
 }
 
-const { title = '', description = '', path = '/', ogImage = '' } = Astro.props
+const { title = '', description = '', path = '/', ogImage = '', publishDate = '', updatedDate = '' } = Astro.props
 
 const database = await getDatabase()
 
@@ -79,6 +81,24 @@ if (database.Icon && database.Icon.Type === 'file') {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    {
+      publishDate && (
+        <script type="application/ld+json" is:inline set:html={JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": siteTitle,
+          "description": siteDescription,
+          "image": [ogImage || siteOGImage],
+          "datePublished": publishDate,
+          "dateModified": updatedDate || publishDate,
+          "author": {
+            "@type": "Person",
+            "name": "tmakino",
+            "url": Astro.site
+          }
+        })} />
+      )
+    }
   </head>
   <body>
     <GoogleAnalytics trackingId={PUBLIC_GA_TRACKING_ID} />

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://astro-notion-blog-tmakino.vercel.app/sitemap-index.xml
