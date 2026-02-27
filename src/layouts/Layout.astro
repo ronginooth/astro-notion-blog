@@ -17,7 +17,14 @@ export interface Props {
   updatedDate?: string
 }
 
-const { title = '', description = '', path = '/', ogImage = '', publishDate = '', updatedDate = '' } = Astro.props
+const {
+  title = '',
+  description = '',
+  path = '/',
+  ogImage = '',
+  publishDate = '',
+  updatedDate = '',
+} = Astro.props
 
 const database = await getDatabase()
 
@@ -52,7 +59,7 @@ if (database.Icon && database.Icon.Type === 'file') {
 }
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -77,34 +84,42 @@ if (database.Icon && database.Icon.Type === 'file') {
       integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0"
       crossorigin="anonymous"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
     {
       publishDate && (
-        <script type="application/ld+json" is:inline set:html={JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
-          "headline": siteTitle,
-          "description": siteDescription,
-          "image": [ogImage || siteOGImage],
-          "datePublished": publishDate,
-          "dateModified": updatedDate || publishDate,
-          "author": {
-            "@type": "Person",
-            "name": "tmakino",
-            "url": Astro.site
-          }
-        })} />
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: siteTitle,
+            description: siteDescription,
+            image: [ogImage || siteOGImage],
+            datePublished: publishDate,
+            dateModified: updatedDate || publishDate,
+            author: {
+              '@type': 'Person',
+              name: 'tmakino',
+              url: Astro.site,
+            },
+          })}
+        />
       )
     }
   </head>
   <body>
     <GoogleAnalytics trackingId={PUBLIC_GA_TRACKING_ID} />
     <div class="container">
-
-
       <div>
         <main>
           <div class="content">
@@ -169,6 +184,66 @@ if (database.Icon && database.Icon.Type === 'file') {
         <script src={getStaticFilePath('/scripts/fslightbox.js')} />
       )
     }
+
+    <button
+      id="floating-scroll-btn"
+      class="floating-scroll-btn"
+      aria-label="ページ移動"
+    >
+      <i id="floating-scroll-icon" class="ri-arrow-down-line"></i>
+    </button>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('floating-scroll-btn')
+        const icon = document.getElementById('floating-scroll-icon')
+        if (!btn || !icon) return
+
+        let isAtBottom = false
+
+        const updateBtnState = () => {
+          const scrollPos = window.scrollY + window.innerHeight
+          const threshold = document.body.scrollHeight - 100
+
+          if (scrollPos >= threshold) {
+            if (!isAtBottom) {
+              isAtBottom = true
+              icon.classList.replace('ri-arrow-down-line', 'ri-arrow-up-line')
+            }
+          } else {
+            if (isAtBottom) {
+              isAtBottom = false
+              icon.classList.replace('ri-arrow-up-line', 'ri-arrow-down-line')
+            }
+          }
+        }
+
+        // 初期状態
+        updateBtnState()
+
+        // スクロール監視 (throttle)
+        let ticking = false
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              updateBtnState()
+              ticking = false
+            })
+            ticking = true
+          }
+        })
+
+        btn.addEventListener('click', () => {
+          if (isAtBottom) {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          } else {
+            window.scrollTo({
+              top: document.body.scrollHeight,
+              behavior: 'smooth',
+            })
+          }
+        })
+      })
+    </script>
   </body>
 </html>
 
@@ -293,6 +368,41 @@ if (database.Icon && database.Icon.Type === 'file') {
     color: inherit;
     text-decoration: underline;
   }
+
+  /* フローティング「下へ/上へ」切り替えボタン（スマホ用） */
+  .floating-scroll-btn {
+    display: none;
+  }
+  @media (max-width: 640px) {
+    .floating-scroll-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      color: #333;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+    .floating-scroll-btn:active {
+      transform: scale(0.9);
+      background: rgba(255, 255, 255, 0.9);
+    }
+    .floating-scroll-btn i {
+      transition: transform 0.3s ease;
+    }
+  }
 </style>
 
 <style is:global>
@@ -313,11 +423,13 @@ if (database.Icon && database.Icon.Type === 'file') {
 
     --radius: 16px;
 
-    --font-sans: 'Zen Maru Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    --font-sans:
+      'Zen Maru Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
       'Helvetica Neue', sans-serif;
-    --font-mono: SFMono-Regular, Menlo, Consolas, 'PT Mono', 'Liberation Mono',
-      Courier, monospace;
+    --font-mono:
+      SFMono-Regular, Menlo, Consolas, 'PT Mono', 'Liberation Mono', Courier,
+      monospace;
   }
 
   * {
@@ -336,9 +448,21 @@ if (database.Icon && database.Icon.Type === 'file') {
     min-height: 100vh;
     background-color: #fffdf9;
     background-image:
-        radial-gradient(circle at 15% 50%, rgba(255, 200, 221, 0.4), transparent 40%),
-        radial-gradient(circle at 85% 30%, rgba(189, 224, 254, 0.4), transparent 40%),
-        radial-gradient(circle at 50% 80%, rgba(253, 255, 182, 0.4), transparent 50%);
+      radial-gradient(
+        circle at 15% 50%,
+        rgba(255, 200, 221, 0.4),
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 85% 30%,
+        rgba(189, 224, 254, 0.4),
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 50% 80%,
+        rgba(253, 255, 182, 0.4),
+        transparent 50%
+      );
     background-attachment: fixed;
     color: var(--fg);
     font-family: var(--font-sans);

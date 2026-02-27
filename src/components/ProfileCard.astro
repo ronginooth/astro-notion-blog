@@ -2,7 +2,10 @@
 import styles from '../styles/blog.module.css'
 ---
 
-<div class={`${styles.post} ${styles.profileCard}`} style="background: rgba(255,255,255,0.7);">
+<div
+  class={`${styles.post} ${styles.profileCard}`}
+  style="background: rgba(255,255,255,0.7);"
+>
   <img src="/profile.jpg" alt="Profile" class={styles.avatar} />
   <div class={styles.profileName}>ロンギ</div>
   <div class={styles.profileDesc}>
@@ -11,10 +14,20 @@ import styles from '../styles/blog.module.css'
     論文執筆はAIに任せてコーヒーで一息。
   </div>
   <div class={styles.socialIcons}>
-    <a href="https://x.com/ronginooth" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+    <a
+      href="https://x.com/ronginooth"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="X (Twitter)"
+    >
       <i class="ri-twitter-x-line"></i>
     </a>
-    <a href="#" aria-label="Note">
+    <a
+      href="https://note.com/ronginooth_ai"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Note"
+    >
       <img src="/note-logo.png" alt="Note" />
     </a>
   </div>
