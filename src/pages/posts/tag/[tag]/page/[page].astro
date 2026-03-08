@@ -15,6 +15,7 @@ import PostTags from '../../../../../components/PostTags.astro'
 import PostTitle from '../../../../../components/PostTitle.astro'
 import PostFeaturedImage from '../../../../../components/PostFeaturedImage.astro'
 import PostExcerpt from '../../../../../components/PostExcerpt.astro'
+import PostStats from '../../../../../components/PostStats.astro'
 import ReadMoreLink from '../../../../../components/ReadMoreLink.astro'
 import Pagination from '../../../../../components/Pagination.astro'
 import BlogPostsLink from '../../../../../components/BlogPostsLink.astro'
@@ -78,6 +79,7 @@ const currentTag = posts[0].Tags.find((t) => t.name === tag)
               <PostTags post={post} enableLink={false} />
               <PostTitle post={post} enableLink={false} />
               <PostExcerpt post={post} />
+              <PostStats slug={post.Slug} />
               <a href={getPostLink(post.Slug)} class={styles.cardLink} aria-label={post.Title}></a>
             </div>
           </div>
